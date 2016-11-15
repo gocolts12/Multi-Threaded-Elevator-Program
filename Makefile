@@ -13,23 +13,23 @@ burn-in: clean hw6.c
 	./hw6
 
 test: clean $(SCHEDULER)
-	@echo "\n\nNOTE: Logs from stderr stored in /tmp/logs.tmp\n\n"
+	@echo "\n\nNOTE: Logs from stderr stored in ./logs.tmp\n\n"
 	@sleep 1
 	gcc -DDELAY=10000 -DLOG_LEVEL=9 -DPASSENGERS=10 -DELEVATORS=1 -DFLOORS=5 -g --std=c99 main.c $(SCHEDULER) -o hw6 $(LIBS) $(CCOPT)
-	@./hw6 2> /tmp/logs.tmp
-	@cat /tmp/logs.tmp | egrep -v Passenger > /tmp/testresults
-	@cat /tmp/logs.tmp | awk '/trip duration/{sum+=$$5;count++;if(max<$$5){max=$$5}} END {printf "Mean time: %.2f max: %.2f\n",sum/count,max}' >> /tmp/testresults
+	@./hw6 2> ./logs.tmp
+	@cat ./logs.tmp | egrep -v Passenger > ./testresults
+	@cat ./logs.tmp | awk '/trip duration/{sum+=$$5;count++;if(max<$$5){max=$$5}} END {printf "Mean time: %.2f max: %.2f\n",sum/count,max}' >> ./testresults
 
 	@gcc -DDELAY=10000 -DLOG_LEVEL=6 -DFLOORS=2 -g --std=c99 main.c $(SCHEDULER) -o hw6 $(LIBS) $(CCOPT)
-	@./hw6 2> /tmp/logs.tmp
-	@cat /tmp/logs.tmp | egrep -v Passenger >> /tmp/testresults
-	@cat /tmp/logs.tmp | awk '/trip duration/{sum+=$$5;count++;if(max<$$5){max=$$5}} END {printf "Mean time: %.2f max: %.2f\n",sum/count,max}' >> /tmp/testresults
+	@./hw6 2> ./logs.tmp
+	@cat ./logs.tmp | egrep -v Passenger >> ./testresults
+	@cat ./logs.tmp | awk '/trip duration/{sum+=$$5;count++;if(max<$$5){max=$$5}} END {printf "Mean time: %.2f max: %.2f\n",sum/count,max}' >> ./testresults
 
 	@gcc -DDELAY=10000 -DELEVATORS=10 -DLOG_LEVEL=6 -g --std=c99 main.c $(SCHEDULER) -o hw6 $(LIBS) $(CCOPT)
-	@./hw6 2> /tmp/logs.tmp
-	@cat /tmp/logs.tmp | egrep -v Passenger >> /tmp/testresults
-	@cat /tmp/logs.tmp | awk '/trip duration/{sum+=$$5;count++;if(max<$$5){max=$$5}} END {printf "Mean time: %.2f max: %.2f\n",sum/count,max}' >> /tmp/testresults
-	cat /tmp/testresults
+	@./hw6 2> ./logs.tmp
+	@cat ./logs.tmp | egrep -v Passenger >> ./testresults
+	@cat ./logs.tmp | awk '/trip duration/{sum+=$$5;count++;if(max<$$5){max=$$5}} END {printf "Mean time: %.2f max: %.2f\n",sum/count,max}' >> ./testresults
+	cat ./testresults
 
 
 clean:
