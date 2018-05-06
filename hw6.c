@@ -59,6 +59,7 @@ void scheduler_init()
       ele[i]->occupied = 0;
 
 			pthread_mutex_init(&ele[i]->L, 0);
+			counter++;
 	}
 }
 
